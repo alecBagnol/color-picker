@@ -1,35 +1,35 @@
-const colorList = [
+const colorList: {h:number,s:number,l:number}[] =[
     {h:286,s:81,l:65},
     {h:346,s:81,l:65},
     {h:54,s:81,l:65},
     {h:139,s:81,l:65},
     {h:180,s:81,l:65},
-    {h:0,s:0,l:0}];
+    {h:0,s:0,l:0}
+];
 
-
-function buildColor(h,s,l){
+function buildColor(h:number,s:number,l:number):string{
     return `hsl(${h},${s}%,${l}%)`;
 }
-function createColorBox(colorHSL){
-    let color = buildColor(colorHSL.h,colorHSL.s,colorHSL.l);
-    let box = document.createElement("div");
+function createColorBox(colorHSL:{h:number,s:number,l:number}): HTMLElement | null{
+    let color:string = buildColor(colorHSL.h,colorHSL.s,colorHSL.l);
+    let box: HTMLElement = document.createElement("div");
     box.className = 'color__box';
     box.style.backgroundColor = color;
     return box;
 }
-function addColorOptions(colors){
-    let optionsContainer = document.querySelector('.color--options__boxes');
+function addColorOptions(colors:{h:number, s:number, l:number}[]){
+    let optionsContainer:HTMLElement = document.querySelector('.color--options__boxes');
     optionsContainer.innerHTML = '';
     colors.forEach(color => {
-        let colorBox = createColorBox(color);
+        let colorBox:HTMLElement = createColorBox(color);
         optionsContainer.appendChild(colorBox);
     });
 }
 function addClickToOptions(){
-    const boxes = document.querySelectorAll('.color__box');
+    const boxes:NodeListOf<HTMLElement> = document.querySelectorAll('.color__box');
     [...boxes].forEach(box =>{
         box.addEventListener('click', ()=>{
-            let boxIndex = Array.from(box.parentElement.children).indexOf(box);
+            let boxIndex:number = Array.from(box.parentElement.children).indexOf(box);
             createScreenColors(colorList[boxIndex]);
         })
     })
